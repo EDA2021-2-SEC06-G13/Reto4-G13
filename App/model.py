@@ -31,6 +31,7 @@ from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.ADT import orderedmap as om
+from DISClib.ADT import graph as gr
 assert cf
 
 """
@@ -41,7 +42,8 @@ los mismos.
 def newCatalog():
     catalog = {'aeropuerto': None}
 
-    catalog['aeropuerto'] = om.newMap('BST',comparefunction=cmpaero)
+    catalog['aeropuerto'] = gr.newGraph(datastructure="ADJ_LIST",directed=False,size=10,comparefunction=cmpaero)
+    catalog['ida-vuelta'] = gr.newGraph(datastructure="ADJ_LIST",directed=False,size=10,comparefunction=cmpaero)
 
     return catalog
 
@@ -49,22 +51,18 @@ def newCatalog():
 def cmpaero(city_1,city_2):  
     if city_1 == city_2:         
         return 0     
-    elif city_1 > city_2:         
+    else:         
         return 1     
 
 
-def addAero(catalog,aeropuerto):
-    presente = om.contains(catalog["aeropuerto"], aeropuerto["IATA"])
-    if not presente:
-        lista=lt.newList()
-        lt.addFirst(lista, aeropuerto)
-        om.put(catalog["aeropuerto"],aeropuerto["IATA"],lista)
-        
-    else:
-        nombre=aeropuerto["IATA"]
-        entry = om.get(catalog["aeropuerto"], nombre)
-        lista=me.getValue(entry)
-        lt.addLast(lista, aeropuerto)
+def addVertice(catalog,aeropuerto):
+    gr.insertVertex(catalog["aeropuerto"],aeropuerto["IATA"])
+
+def addArco(catalog,aero):
+    vertice_a=aero["Departure"]
+    vertice_b=aero["Destination"]
+    peso=aero["distance_km"]
+    gr.addEdge(catalog["aeropuerto"],vertice_a,vertice_b,float(peso))
 
 # Construccion de modelos
 

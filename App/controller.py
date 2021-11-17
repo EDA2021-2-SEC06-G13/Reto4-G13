@@ -31,19 +31,22 @@ def initCatalog():
 
 def loadData(catalog):
     loadAero(catalog)
+    loadRoutes(catalog)
 
 
 def loadAero(catalog):
     ufosfile = cf.data_dir + 'airports_full.csv'
     input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
     for aero in input_file:
-        print(aero)
-        model.addAero(catalog, aero)
-   
-"""""
-def requerimiento_1(nombre_ciudad,catalog):
-    return model.primer_requerimiento(nombre_ciudad,catalog)
-""""
+        model.addVertice(catalog, aero)
+
+def loadRoutes(catalog):
+    ufosfile = cf.data_dir + 'routes_full.csv'
+    input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
+    for aero in input_file:
+        model.addArco(catalog, aero)
+
+
 
 
 """
