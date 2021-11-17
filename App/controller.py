@@ -24,6 +24,27 @@ import config as cf
 import model
 import csv
 
+def initCatalog():
+   
+    catalog = model.newCatalog()
+    return catalog
+
+def loadData(catalog):
+    loadAero(catalog)
+
+
+def loadAero(catalog):
+    ufosfile = cf.data_dir + 'airports_full.csv'
+    input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
+    for aero in input_file:
+        print(aero)
+        model.addAero(catalog, aero)
+   
+"""""
+def requerimiento_1(nombre_ciudad,catalog):
+    return model.primer_requerimiento(nombre_ciudad,catalog)
+""""
+
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
