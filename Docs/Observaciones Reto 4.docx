@@ -1,0 +1,17 @@
+a)	¿Cuántos grafos se necesitan definir para solucionar los requerimientos del reto? y ¿Por qué? 
+-Parcialmente se tiene pensado, como dice el enunciado, realizar dos grafos. Donde el primero seria un dígrafo en el cual se van a incluir todos los aeropuertos del csv 
+y sus respectivas rutas a otros aeropuertos, los cuales están indicados en el otro csv. Por otro lado, se hará el grafo no dirigido, en el cual se van a incluir los aeropuertos 
+que tengan doble sentido con otro determinado aeropuerto. 
+
+Para el requerimiento 1, parcialmente, haremos uso del grafo que se hizo en la carga de datos, ya que en este caso se necesito saber si un aeropuerto sirve como un punto de 
+interconexión hacia otro punto distinto de ruta. Por otra parte, para el requerimiento 2, al igual que con el anterior, se hará uso del grafo establecido con sus respectivos 
+aeropuertos como vértices, podremos determinar si estos pertenecen al mismo cluster. Ahora bien, consideramos que para los ultimos requerimientos es posible que si recurramos a la 
+creacion de otros grafos, pues por ejemplo, para el 3, un grafo de conexiones nos permitira saber la ruta mas corta. 
+
+b)	¿Cuáles son las características específicas de cada uno de los grafos definidos? (vértices, arcos, denso o disperso, dirigido o no dirigido). 
+-Las características que determinamos para los grafos, son principalmente que el grafo es no dirigido ya que hay aeropuertos que tienen mas de una ruta, lo que de igual forma lo vuelve fuertemente conectado. 
+Por otra parte, los vértices vienen siendo los nombres de los aeropuertos abreviados. Ahora bien, el grafo podría considerarse denso al tener un gran numero de arcos asociados. 
+
+c) Además de los grafos, ¿Qué otras estructuras de datos adicionales se necesitan para resolver los requerimientos? Y ¿Por qué?
+-Se debe utilizar una estructura de tipo mapa ya que nos permitirá adicionar un aeropuerto como un vértice del grafo. 
+
