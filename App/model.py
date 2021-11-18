@@ -42,27 +42,79 @@ los mismos.
 def newCatalog():
     catalog = {'aeropuerto': None}
 
-    catalog['aeropuerto'] = gr.newGraph(datastructure="ADJ_LIST",directed=False,size=10,comparefunction=cmpaero)
-    catalog['ida-vuelta'] = gr.newGraph(datastructure="ADJ_LIST",directed=False,size=10,comparefunction=cmpaero)
-
+    catalog['aeropuerto'] = mp.newMap(numelements=14000,
+                                     maptype='PROBING',
+                                     comparefunction=cmpaeropuerto)
+    catalog['ida-vuelta'] = gr.newGraph(datastructure="ADJ_LIST",directed=True,size=10,comparefunction=cmpaero)
+    catalog['idayvuelta'] = gr.newGraph(datastructure="ADJ_LIST",directed=False,size=10,comparefunction=cmpaero)
+    catalog['lista_rutas'] = lt.newList(datastructure='SINGLE_LINKED', cmpfunction=None, key=None, filename=None, delimiter=",")
     return catalog
 
 
 def cmpaero(city_1,city_2):  
     if city_1 == city_2:         
-        return 0     
+        return 0    
+    elif city_1 > city_2:
+        return 1 
     else:         
-        return 1     
+        return -1 
+
+def cmpaeropuerto(llave,entry):
+    llave_1=me.getKey(entry)
+    if llave == llave_1:         
+        return 0    
+    elif llave > llave_1:
+        return 1 
+    else:         
+        return -1
 
 
-def addVertice(catalog,aeropuerto):
-    gr.insertVertex(catalog["aeropuerto"],aeropuerto["IATA"])
+def addAeropuerto(catalog,aeropuerto):
+    presente = om.contains(catalog["aeropuerto"], aeropuerto["IATA"])
+    if not presente:
+        lista=lt.newList()
+        lt.addFirst(lista, aeropuerto)
+        om.put(catalog["aeropuerto"],aeropuerto["IATA"],lista)
+        
+    else:
+        nombre=aeropuerto["IATA"]
+        entry = om.get(catalog["aeropuerto"], nombre)
+        lista=me.getValue(entry)
+        lt.addLast(lista, aeropuerto)
+
+def addVertice (catalog, vertice):
+    if gr.containsVertex(catalog["ida-vuelta"], vertice):
+        gr.insertVertex(catalog["ida-vuelta"], vertice)
+
+def addInfo (catalog, ruta):
+    origen=ruta["Departure"]
+    destino= ruta["Destination"]
+    addVertice(catalog["ida-vuelta"],origen)
+    addVertice(catalog["ida-vuelta"],destino)
+    addArco(catalog["ida-vuelta"],ruta)
+    lt.addLast(catalog["lista_rutas"], ruta)
+
 
 def addArco(catalog,aero):
     vertice_a=aero["Departure"]
     vertice_b=aero["Destination"]
     peso=aero["distance_km"]
     gr.addEdge(catalog["aeropuerto"],vertice_a,vertice_b,float(peso))
+
+def addGraph(catalog):
+    lista_ruta=catalog["lista_rutas"]
+    for ruta_1 in lt.iterator(lista_ruta):
+        origen_1= ruta_1["Departure"]
+        destino_1= ruta_1["Destination"]
+        for ruta_2 in lt.iterator(lista_ruta):
+            origen_2= ruta_2["Departure"]
+            destino_2= ruta_2["Destination"] 
+            if origen_1==destino_2 and origen_2 == destino_1:
+                addVertice(catalog["idayvuelta"], origen_1)
+                addVertice(catalog["idayvuelta"], origen_2)
+                addArco(catalog["idayvuelta"],ruta_1)
+
+
 
 # Construccion de modelos
 
