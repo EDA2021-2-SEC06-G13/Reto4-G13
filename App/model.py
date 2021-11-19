@@ -45,8 +45,8 @@ def newCatalog():
     catalog['aeropuerto'] = mp.newMap(numelements=14000,
                                      maptype='PROBING',
                                      comparefunction=cmpaeropuerto)
-    catalog['ida-vuelta'] = gr.newGraph(datastructure="ADJ_LIST",directed=True,size=10,comparefunction=cmpaero)
-    catalog['idayvuelta'] = gr.newGraph(datastructure="ADJ_LIST",directed=False,size=10,comparefunction=cmpaero)
+    catalog['ida'] = gr.newGraph(datastructure="ADJ_LIST",directed=True,size=10,comparefunction=cmpaeropuerto)
+    catalog['idayvuelta'] = gr.newGraph(datastructure="ADJ_LIST",directed=False,size=10,comparefunction=cmpaeropuerto)
     catalog['lista_rutas'] = lt.newList(datastructure='SINGLE_LINKED', cmpfunction=None, key=None, filename=None, delimiter=",")
     return catalog
 
@@ -83,15 +83,15 @@ def addAeropuerto(catalog,aeropuerto):
         lt.addLast(lista, aeropuerto)
 
 def addVertice (catalog, vertice):
-    if gr.containsVertex(catalog["ida-vuelta"], vertice):
-        gr.insertVertex(catalog["ida-vuelta"], vertice)
+    if not gr.containsVertex(catalog["ida"], vertice["IATA"]):
+        gr.insertVertex(catalog["ida"], vertice["IATA"])
 
 def addInfo (catalog, ruta):
     origen=ruta["Departure"]
     destino= ruta["Destination"]
-    addVertice(catalog["ida-vuelta"],origen)
-    addVertice(catalog["ida-vuelta"],destino)
-    addArco(catalog["ida-vuelta"],ruta)
+    addVertice(catalog["ida"],origen)
+    addVertice(catalog["ida"],destino)
+    addArco(catalog["ida"],ruta)
     lt.addLast(catalog["lista_rutas"], ruta)
 
 
@@ -113,6 +113,8 @@ def addGraph(catalog):
                 addVertice(catalog["idayvuelta"], origen_1)
                 addVertice(catalog["idayvuelta"], origen_2)
                 addArco(catalog["idayvuelta"],ruta_1)
+
+
 
 
 

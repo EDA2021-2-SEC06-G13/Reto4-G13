@@ -26,6 +26,8 @@ import controller
 from DISClib.ADT import list as lt
 assert cf
 from DISClib.ADT import orderedmap as om
+from DISClib.ADT import map as mp
+from DISClib.ADT import graph as gr
 
 
 """
@@ -64,11 +66,18 @@ while True:
         catalog=initCatalog()
         loadData(catalog)
         sumatoria=0
-        info=om.valueSet(catalog["aeropuerto"])
+        info=mp.valueSet(catalog["aeropuerto"])
         for i in range(1,lt.size(info)+1):
             cant_ciudad=lt.getElement(info,i)
             cantidad=lt.size(cant_ciudad)
             sumatoria+=cantidad
+
+        vertices=gr.numVertices(catalog["aeropuerto"])
+        arco=gr.numEdges(catalog["aeropuerto"])
+        for i in range(0,2):
+            
+
+
 
     elif int(inputs[0]) == 2:
         pass
