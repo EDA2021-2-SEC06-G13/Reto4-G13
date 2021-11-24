@@ -32,22 +32,44 @@ def initCatalog():
 def loadData(catalog):
     loadAero(catalog)
     loadRoutes(catalog)
-
+    loadCity(catalog)
+    loadGraph(catalog)
 
 def loadAero(catalog):
-    ufosfile = cf.data_dir + 'airports_full.csv'
+    ufosfile = cf.data_dir + 'Skylines/airports_full.csv'
     input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
     for aero in input_file:
         model.addVertice(catalog, aero)
 
 def loadRoutes(catalog):
-    ufosfile = cf.data_dir + 'routes_full.csv'
+    ufosfile = cf.data_dir + 'Skylines/routes_full.csv'
     input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
     for aero in input_file:
         model.addArco(catalog, aero)
 
+def loadCity(catalog):
+    ufosfile = cf.data_dir + 'Skylines/worldcities.csv'
+    input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
+    for aero in input_file:
+        model.addCiudad(catalog, aero)
 
+def loadGraph(catalog):
+    model.addGraph(catalog)
 
+def totalAeropuertos(catalog):
+    return model.totalAeropuertos(catalog)
+
+def totalAeropuertos2(catalog):
+    return model.totalAeropuertos_2(catalog)
+
+def total_rutas(catalog):
+    return model.total_rutas_aereas(catalog)
+
+def total_rutas2(catalog):
+    return model.total_rutas_aereas_2(catalog)
+
+def total_ciudades(catalog):
+    return model.total_ciudades(catalog)
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.

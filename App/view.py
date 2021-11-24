@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+
 import config as cf
 import sys
 import controller
@@ -65,17 +66,19 @@ while True:
         print("Cargando información de los archivos ....")
         catalog=initCatalog()
         loadData(catalog)
+        total_aeropuerto= controller.totalAeropuertos(catalog)
+        totalAeropuertos2=controller.totalAeropuertos2(catalog)
+        total_rutasaereas= controller.total_rutas(catalog)
+        total_rutasaereas2= controller.total_rutas2(catalog)
+        print("El total de aeropuertos es "+ str(total_aeropuerto) + " en el grafo dirigido y del grafo no dirigido: " + str(totalAeropuertos2))
+        print("El total de rutas aereas es "+ str(total_rutasaereas)+ " en el grafo dirigido y del grafo no dirigido: " + str(total_rutasaereas2))
         sumatoria=0
-        info=mp.valueSet(catalog["aeropuerto"])
+        info=mp.valueSet(catalog["ciudades"])
         for i in range(1,lt.size(info)+1):
             cant_ciudad=lt.getElement(info,i)
             cantidad=lt.size(cant_ciudad)
             sumatoria+=cantidad
-
-        vertices=gr.numVertices(catalog["aeropuerto"])
-        arco=gr.numEdges(catalog["aeropuerto"])
-        for i in range(0,2):
-            
+        print("El total de ciudades es: "+ str(sumatoria))
 
 
 
