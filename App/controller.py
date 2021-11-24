@@ -33,28 +33,25 @@ def loadData(catalog):
     loadAero(catalog)
     loadRoutes(catalog)
     loadCity(catalog)
-    loadGraph(catalog)
 
 def loadAero(catalog):
-    ufosfile = cf.data_dir + 'Skylines/airports_full.csv'
+    ufosfile = cf.data_dir + 'airports_full.csv'
     input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
     for aero in input_file:
         model.addVertice(catalog, aero)
 
 def loadRoutes(catalog):
-    ufosfile = cf.data_dir + 'Skylines/routes_full.csv'
+    ufosfile = cf.data_dir + 'routes_full.csv'
     input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
     for aero in input_file:
         model.addArco(catalog, aero)
 
 def loadCity(catalog):
-    ufosfile = cf.data_dir + 'Skylines/worldcities.csv'
+    ufosfile = cf.data_dir + 'worldcities.csv'
     input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
     for aero in input_file:
         model.addCiudad(catalog, aero)
 
-def loadGraph(catalog):
-    model.addGraph(catalog)
 
 def totalAeropuertos(catalog):
     return model.totalAeropuertos(catalog)
@@ -70,6 +67,12 @@ def total_rutas2(catalog):
 
 def total_ciudades(catalog):
     return model.total_ciudades(catalog)
+
+def requerimiento_uno(catalog):
+    return model.requerimiento_1(catalog)
+
+def requerimiento_dos(catalog,ciudad_1,ciudad_2):
+    return model.requeriiento_2(catalog,ciudad_1,ciudad_2)
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.

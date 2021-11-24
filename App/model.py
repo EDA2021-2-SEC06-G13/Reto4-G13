@@ -43,7 +43,7 @@ def newCatalog():
     catalog = {'aeropuerto': None,
                 'ida':None,
                 'idayvuelta':None,
-                'lista_rutas':None}
+                }
 
     catalog['aeropuerto'] = om.newMap('RBT',
                                      comparefunction=cmpaeropuerto)
@@ -51,7 +51,6 @@ def newCatalog():
                                      comparefunction=cmpaeropuerto)
     catalog['ida'] = gr.newGraph(datastructure="ADJ_LIST",directed=True,size=10,comparefunction=cmpaeropuerto)
     catalog['idayvuelta'] = gr.newGraph(datastructure="ADJ_LIST",directed=False,size=10,comparefunction=cmpaeropuerto)
-    catalog['lista_rutas'] = lt.newList(datastructure='SINGLE_LINKED', cmpfunction=None, key=None, filename=None, delimiter=",")
     return catalog
 
 
@@ -102,6 +101,8 @@ def addCiudad(catalog,ciudad):
 def addVertice (catalog, vertice):
     if not gr.containsVertex(catalog["ida"], vertice["IATA"]):
         gr.insertVertex(catalog["ida"], vertice["IATA"])
+        
+    
 
 def addInfo (catalog, ruta):
     origen=ruta["Departure"]
@@ -109,7 +110,6 @@ def addInfo (catalog, ruta):
     addVertice(catalog["ida"],origen)
     addVertice(catalog["ida"],destino)
     addArco(catalog["ida"],ruta)
-    lt.addLast(catalog["lista_rutas"], ruta)
 
 
 def addArco(catalog,aero):
@@ -117,21 +117,16 @@ def addArco(catalog,aero):
     vertice_b=aero["Destination"]
     peso=aero["distance_km"]
     gr.addEdge(catalog["ida"],vertice_a,vertice_b,float(peso))
+    if gr.getEdge(catalog["ida"],vertice_b,vertice_a)!=None:
+        if not gr.containsVertex(catalog["idayvuelta"], vertice_b):
+            gr.insertVertex(catalog["idayvuelta"], vertice_b)
+        if not gr.containsVertex(catalog["idayvuelta"], vertice_a):
+            gr.insertVertex(catalog["idayvuelta"], vertice_a)    
+        gr.addEdge(catalog["idayvuelta"],vertice_a,vertice_b)
+
+
     
 
-def addGraph(catalog):
-    lista_ruta=catalog["lista_rutas"]
-    for ruta_1 in lt.iterator(lista_ruta):
-        origen_1= ruta_1["Departure"]
-        destino_1= ruta_1["Destination"]
-        for ruta_2 in lt.iterator(lista_ruta):
-            origen_2= ruta_2["Departure"]
-            destino_2= ruta_2["Destination"] 
-            if origen_1==destino_2 and origen_2 == destino_1:
-                
-                addVertice(catalog["idayvuelta"], origen_1)
-                addVertice(catalog["idayvuelta"], origen_2)
-                addArco(catalog["idayvuelta"],ruta_1)
 
 def totalAeropuertos(catalog):
     return gr.numVertices(catalog["ida"])
@@ -149,6 +144,32 @@ def total_rutas_aereas_2(catalog):
 def total_ciudades(catalog):
     lista=mp.valueSet(catalog["ciudades"])
     return lt.size(lista)
+
+
+def requerimiento_1(catalog):
+    lista_aeropuertos=lt.newList()
+    lista_vertices=gr.vertices(catalog["ida"])
+    mayor=0
+    i=1
+    while i<=lt.size(lista_vertices):
+        vertice=lt.getElement(lista_vertices,i)
+        entradas=gr.degree(catalog["ida"],vertice)
+        salidas=gr.outdegree(catalog["ida"],vertice)
+        total=entradas+salidas
+
+        if total>mayor:
+            mayor=total
+            lista_aeropuertos=lt.newList()
+            lt.addLast(lista_aeropuertos,vertice)
+        elif total==mayor:
+            lt.addLast(lista_aeropuertos,vertice)
+
+        i+=1
+    return lista_aeropuertos
+
+def requeriiento_2(catalog,ciudad_1,ciudad_2):
+    
+
 
 
 

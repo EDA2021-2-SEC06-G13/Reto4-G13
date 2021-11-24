@@ -72,18 +72,31 @@ while True:
         total_rutasaereas2= controller.total_rutas2(catalog)
         print("El total de aeropuertos es "+ str(total_aeropuerto) + " en el grafo dirigido y del grafo no dirigido: " + str(totalAeropuertos2))
         print("El total de rutas aereas es "+ str(total_rutasaereas)+ " en el grafo dirigido y del grafo no dirigido: " + str(total_rutasaereas2))
-        sumatoria=0
+        """sumatoria=0
         info=mp.valueSet(catalog["ciudades"])
         for i in range(1,lt.size(info)+1):
             cant_ciudad=lt.getElement(info,i)
             cantidad=lt.size(cant_ciudad)
             sumatoria+=cantidad
         print("El total de ciudades es: "+ str(sumatoria))
-
+"""
 
 
     elif int(inputs[0]) == 2:
-        pass
+        r=controller.requerimiento_uno(catalog)
+        print("El/Los aeropuerto(s) que sirven como punto de interconexion a mas rutas es/son ")
+        i=1
+        while i<=lt.size(r):
+            aeropuerto=lt.getElement(r,i)
+            print(aeropuerto)
+            i+=1
+        
+        
+    elif int(inputs[0]) == 3:
+        ciudad_1=input("Ingrese el codigo IATA del aeropuerto 1")
+        ciudad_2=input("Ingrese el codigo IATA del aeropuerto 2")
+        r=controller.requerimiento_dos(catalog,ciudad_1,ciudad_2)
+        
 
     else:
         sys.exit(0)
