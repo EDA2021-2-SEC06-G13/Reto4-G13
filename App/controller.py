@@ -72,7 +72,7 @@ def requerimiento_uno(catalog):
     return model.requerimiento_1(catalog)
 
 def requerimiento_dos(catalog,ciudad_1,ciudad_2):
-    return model.requeriiento_2(catalog,ciudad_1,ciudad_2)
+    return model.requerimiento_2(catalog,ciudad_1,ciudad_2)
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
