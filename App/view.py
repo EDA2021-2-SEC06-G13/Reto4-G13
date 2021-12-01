@@ -96,6 +96,7 @@ while True:
         ciudad_1=input("Ingrese el codigo IATA del aeropuerto 1")
         ciudad_2=input("Ingrese el codigo IATA del aeropuerto 2")
         r=controller.requerimiento_dos(catalog,ciudad_1,ciudad_2)
+        print(r)
 
     elif int(inputs[0])== 4:
         ciudad_origen= input("Ingrese la ciudad de origen: ")

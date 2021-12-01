@@ -181,17 +181,12 @@ def requerimiento_1(catalog):
         i+=1
     return lista_aeropuertos
 
-#Requerimiento 3
-'''def requerimiento_2(catalog,ciudad_1,ciudad_2):
+
+def requerimiento_2(catalog,ciudad_1,ciudad_2):
     kosaraju=scc.KosarajuSCC(catalog["ida"])
-    conectado_fuerte=scc.stronglyConnected(kosaraju,ciudad_1,ciudad_2)'''
-    
-        
-    
-
-
-
-
+    conectado_fuerte=scc.stronglyConnected(kosaraju,ciudad_1,ciudad_2)
+    conectado=scc.connectedComponents(kosaraju)
+    return conectado,conectado_fuerte
 
 
 
@@ -242,6 +237,24 @@ def requerimiento_3(catalog, ciudad_origen, ciudad_destino):
             caminos=djk.pathTo(ida,aeropuerto_2["IATA"])
         
     return caminos
+
+def requerimiento_4(catalog,ciudad,cant_millas):
+    km=cant_millas*1.6
+    recorrido=0
+    lista=lt.newList()
+    aeropuerto=ciudad
+    lt.addLast(lista,aeropuerto)
+    while recorrido<=km:
+        vertices=gr.adjacents(catalog["ida"],aeropuerto)
+        for i in range(0,lt.size(vertices)):
+            vertice_2=lt.getElement(vertices,i)
+            arco=gr.getEdge(catalog["ida"],aeropuerto,vertice_2)
+
+
+
+
+
+
 
 
 # Construccion de modelos
