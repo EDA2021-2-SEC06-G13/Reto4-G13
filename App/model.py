@@ -25,7 +25,7 @@
  """
 
 
-from App.controller import elegir_ciudad_2
+from DISClib.DataStructures.arraylist import size
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
@@ -35,6 +35,7 @@ from DISClib.Algorithms.Graphs import scc
 from DISClib.Algorithms.Graphs import dijsktra as djk
 from DISClib.ADT import orderedmap as om
 from DISClib.ADT import graph as gr
+from DISClib.Algorithms.Graphs import scc as scc
 assert cf
 
 """
@@ -181,6 +182,19 @@ def requerimiento_1(catalog):
     return lista_aeropuertos
 
 #Requerimiento 3
+'''def requerimiento_2(catalog,ciudad_1,ciudad_2):
+    kosaraju=scc.KosarajuSCC(catalog["ida"])
+    conectado_fuerte=scc.stronglyConnected(kosaraju,ciudad_1,ciudad_2)'''
+    
+        
+    
+
+
+
+
+
+
+
 
 def minimumCostPaths(catalog, ciudad_origen):
     """
