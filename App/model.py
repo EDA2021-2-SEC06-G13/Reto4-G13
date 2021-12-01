@@ -228,7 +228,7 @@ def requerimiento_3(catalog, ciudad_origen, ciudad_destino):
     lista_origen=lt.newList()
     lista_final=lt.newList()
     aerpuerto_ciudad_1=elegir_ciudad_origen(catalog, ciudad_origen)
-    caminos=None
+    camino=None
     aeropuerto_ciudad_2=elegir_ciudad_destino(catalog,ciudad_destino) 
     lista_aeropuerto=mp.keySet(catalog["aeropuerto"])
     for i in range(1,lt.size(aerpuerto_ciudad_1)+1):
@@ -239,9 +239,9 @@ def requerimiento_3(catalog, ciudad_origen, ciudad_destino):
 
             aeropuerto_2=lt.getElement(aeropuerto_ciudad_2,j)
             print(aeropuerto_2)
-            caminos=djk.pathTo(ida,aeropuerto_2["IATA"])
+            camino=djk.pathTo(ida,aeropuerto_2["IATA"])
         
-    return caminos
+    return camino
 
 
 # Construccion de modelos
