@@ -250,6 +250,8 @@ def requerimiento_4(catalog,ciudad,cant_millas):
             vertice_2=lt.getElement(vertices,i)
             arco=gr.getEdge(catalog["ida"],aeropuerto,vertice_2)
 
+    
+
 
 
 
