@@ -36,25 +36,25 @@ def loadData(catalog):
     loadAeropuerto(catalog)
 
 def loadAero(catalog):
-    ufosfile = cf.data_dir + 'airports_full.csv'
+    ufosfile = cf.data_dir + 'airports-utf8-small.csv'
     input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
     for aero in input_file:
         model.addVertice(catalog, aero)
 
 def loadRoutes(catalog):
-    ufosfile = cf.data_dir + 'routes_full.csv'
+    ufosfile = cf.data_dir + 'routes-utf8-small.csv'
     input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
     for aero in input_file:
         model.addArco(catalog, aero)
 
 def loadCity(catalog):
-    ufosfile = cf.data_dir + 'worldcities.csv'
+    ufosfile = cf.data_dir + 'worldcities-utf8.csv'
     input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
     for aero in input_file:
         model.addCiudad(catalog, aero)
 
 def loadAeropuerto(catalog):
-    ufosfile = cf.data_dir + 'airports_full.csv'
+    ufosfile = cf.data_dir + 'airports-utf8-small.csv'
     input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
     for aero in input_file:
         model.addAeropuerto(catalog, aero)
@@ -88,6 +88,10 @@ def elegir_ciudad_2(catalog, ciudad_destino):
     
 def requerimiento_3(catalog,ciudad_origen,ciudad_destino):
     return model.requerimiento_3(catalog,ciudad_origen,ciudad_destino)
+
+def requerimiento_4(catalog,origen,cant_millas):
+    return model.requerimiento_4(catalog,origen,cant_millas)
+    
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.

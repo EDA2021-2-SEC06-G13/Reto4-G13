@@ -93,10 +93,16 @@ while True:
         
         
     elif int(inputs[0]) == 3:
-        ciudad_1=input("Ingrese el codigo IATA del aeropuerto 1")
-        ciudad_2=input("Ingrese el codigo IATA del aeropuerto 2")
+        ciudad_1=input("Ingrese el codigo IATA del aeropuerto 1 ")
+        ciudad_2=input("Ingrese el codigo IATA del aeropuerto 2 ")
         r=controller.requerimiento_dos(catalog,ciudad_1,ciudad_2)
-        print(r)
+        total=r[0]
+        verdad=r[1]
+        print("El número total de clústeres presentes en la red de transporte aéreo son: "+str(total))
+        print("Los aeropuertos que paso como parametro pertenecen al mismo cluster? "+str(verdad))
+        
+
+        
 
     elif int(inputs[0])== 4:
         ciudad_origen= input("Ingrese la ciudad de origen: ")
