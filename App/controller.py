@@ -34,30 +34,37 @@ def loadData(catalog):
     loadRoutes(catalog)
     loadCity(catalog)
     loadAeropuerto(catalog)
+    loadIata(catalog)
 
 def loadAero(catalog):
-    ufosfile = cf.data_dir + 'airports-utf8-small.csv'
+    ufosfile = cf.data_dir + 'Skylines/airports_full.csv'
     input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
     for aero in input_file:
         model.addVertice(catalog, aero)
 
 def loadRoutes(catalog):
-    ufosfile = cf.data_dir + 'routes-utf8-small.csv'
+    ufosfile = cf.data_dir + 'Skylines/routes_full.csv'
     input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
     for aero in input_file:
         model.addArco(catalog, aero)
 
 def loadCity(catalog):
-    ufosfile = cf.data_dir + 'worldcities-utf8.csv'
+    ufosfile = cf.data_dir + 'Skylines/worldcities.csv'
     input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
     for aero in input_file:
         model.addCiudad(catalog, aero)
 
 def loadAeropuerto(catalog):
-    ufosfile = cf.data_dir + 'airports-utf8-small.csv'
+    ufosfile = cf.data_dir + 'Skylines/airports_full.csv'
     input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
     for aero in input_file:
         model.addAeropuerto(catalog, aero)
+
+def loadIata(catalog):
+    ufosfile = cf.data_dir + 'Skylines/airports_full.csv'
+    input_file = csv.DictReader(open(ufosfile, encoding='utf-8'))
+    for aero in input_file:
+        model.addIATA(catalog, aero)
 
 def totalAeropuertos(catalog):
     return model.totalAeropuertos(catalog)

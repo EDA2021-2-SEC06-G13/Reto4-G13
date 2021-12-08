@@ -33,6 +33,7 @@ from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.Algorithms.Graphs import scc
 from DISClib.Algorithms.Graphs import dijsktra as djk
+from DISClib.Algorithms.Graphs import prim as pm
 from DISClib.ADT import orderedmap as om
 from DISClib.ADT import graph as gr
 from DISClib.Algorithms.Graphs import scc as scc
@@ -52,6 +53,8 @@ def newCatalog():
                 }
 
     catalog['aeropuerto'] = mp.newMap(numelements= 300 ,maptype='PROBING',
+                                     comparefunction=cmpaeropuerto)
+    catalog["iata"]= mp.newMap(numelements= 300 ,maptype='PROBING',
                                      comparefunction=cmpaeropuerto)
     catalog["ciudades"]= mp.newMap(numelements= 300 ,maptype='PROBING',
                                      comparefunction=cmpaeropuerto)
@@ -94,6 +97,19 @@ def addAeropuerto(catalog,aeropuerto):
     else:
         nombre=aeropuerto["City"]
         entry = mp.get(catalog["aeropuerto"], nombre)
+        lista=me.getValue(entry)
+        lt.addLast(lista, aeropuerto)
+
+def addIATA(catalog,aeropuerto):
+    presente = mp.contains(catalog["iata"], aeropuerto["IATA"])
+    if not presente:
+        lista=lt.newList()
+        lt.addFirst(lista, aeropuerto)
+        mp.put(catalog["iata"],aeropuerto["IATA"],lista)
+        
+    else:
+        nombre=aeropuerto["IATA"]
+        entry = mp.get(catalog["iata"], nombre)
         lista=me.getValue(entry)
         lt.addLast(lista, aeropuerto)
 
@@ -188,26 +204,6 @@ def requerimiento_2(catalog,ciudad_1,ciudad_2):
     conectado=scc.connectedComponents(kosaraju)
     return conectado,conectado_fuerte
 
-
-
-
-def minimumCostPaths(catalog, ciudad_origen):
-    """
-    Calcula los caminos de costo mínimo desde la estacion initialStation
-    a todos los demas vertices del grafo
-    """
-    catalog['paths'] = djk.Dijkstra(catalog['ida'], ciudad_origen)
-    return catalog
-
-
-def minimumCostPath(catalog, ciudad_destino):
-    """
-    Retorna el camino de costo minimo entre la estacion de inicio
-    y la estacion destino
-    Se debe ejecutar primero la funcion minimumCostPaths
-    """
-    path = djk.pathTo(catalog['paths'], ciudad_destino)
-    return path
     
 def elegir_ciudad_origen(catalog, ciudad_origen):
     lista_origen=mp.get(catalog["aeropuerto"],ciudad_origen)
@@ -220,36 +216,32 @@ def elegir_ciudad_destino(catalog, ciudad_destino):
     return lista_destino
 
 def requerimiento_3(catalog, ciudad_origen, ciudad_destino):
-    lista_origen=lt.newList()
-    lista_final=lt.newList()
     aerpuerto_ciudad_1=elegir_ciudad_origen(catalog, ciudad_origen)
     camino=None
     aeropuerto_ciudad_2=elegir_ciudad_destino(catalog,ciudad_destino) 
-    lista_aeropuerto=mp.keySet(catalog["aeropuerto"])
     for i in range(1,lt.size(aerpuerto_ciudad_1)+1):
         aeropuerto=lt.getElement(aerpuerto_ciudad_1,i)
-        print(aeropuerto)
         ida=djk.Dijkstra(catalog["ida"],aeropuerto["IATA"])
         for j in range(1,lt.size(aeropuerto_ciudad_2)+1):
-
             aeropuerto_2=lt.getElement(aeropuerto_ciudad_2,j)
-            print(aeropuerto_2)
             camino=djk.pathTo(ida,aeropuerto_2["IATA"])
         
     return camino
 
 def requerimiento_4(catalog,ciudad,cant_millas):
-    km=cant_millas*1.6
+    km=float(cant_millas)*1.6 
     recorrido=0
-    lista=lt.newList()
-    aeropuerto=ciudad
-    lt.addLast(lista,aeropuerto)
-    while recorrido<=km:
+    aeropuerto=mp.get(catalog["iata"],ciudad)
+    arbol=pm.PrimMST(catalog["ida"])
+    arbol_iata=pm.prim(catalog["ida"],arbol,aeropuerto)
+    '''while recorrido<=km:
         vertices=gr.adjacents(catalog["ida"],aeropuerto)
+        print(vertices)
         for i in range(0,lt.size(vertices)):
             vertice_2=lt.getElement(vertices,i)
             arco=gr.getEdge(catalog["ida"],aeropuerto,vertice_2)
-
+        recorrido +=1'''
+    return arbol_iata
     
 
 

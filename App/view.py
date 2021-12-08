@@ -111,8 +111,15 @@ while True:
         destino=controller.elegir_ciudad_2(catalog,ciudad_destino)
         r=controller.requerimiento_3(catalog,ciudad_origen,ciudad_destino)
         print(r)
-        
+        for i in range(1,lt.size(r)+1):
+            valor=lt.getElement(r,i)
+            print(valor["vertexA"], valor["vertexB"], valor["weight"])
 
+    elif int(inputs[0])==5:
+        ciudad=input("Ingrese la ciudad origen: ")
+        millas=input("Ingrese la cantidad de millas: ")
+        r=controller.requerimiento_4(catalog,ciudad,millas)   
+        print(r)
     else:
         sys.exit(0)
 sys.exit(0)
