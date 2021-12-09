@@ -231,17 +231,18 @@ def requerimiento_3(catalog, ciudad_origen, ciudad_destino):
 def requerimiento_4(catalog,ciudad,cant_millas):
     km=float(cant_millas)*1.6 
     recorrido=0
-    aeropuerto=mp.get(catalog["iata"],ciudad)
-    arbol=pm.PrimMST(catalog["ida"])
-    arbol_iata=pm.prim(catalog["ida"],arbol,aeropuerto)
-    '''while recorrido<=km:
-        vertices=gr.adjacents(catalog["ida"],aeropuerto)
-        print(vertices)
-        for i in range(0,lt.size(vertices)):
-            vertice_2=lt.getElement(vertices,i)
-            arco=gr.getEdge(catalog["ida"],aeropuerto,vertice_2)
-        recorrido +=1'''
-    return arbol_iata
+    while recorrido<=km:
+        vertices=gr.adjacents(catalog["ida"],ciudad)
+        for j in range(1,lt.size(vertices)+1):
+            ciudad_2=lt.getElement(vertices,j)
+            camino=gr.getEdge(catalog["ida"],ciudad,ciudad_2)
+        recorrido +=1
+    return camino
+
+def requerimiento_5(catalog,codigo):
+    kosaraju=scc.KosarajuSCC(catalog["ida"])
+    contar=scc.sccCount(catalog["ida"],kosaraju,codigo)
+    return contar
     
 
 

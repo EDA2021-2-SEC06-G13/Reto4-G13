@@ -99,6 +99,8 @@ def requerimiento_3(catalog,ciudad_origen,ciudad_destino):
 def requerimiento_4(catalog,origen,cant_millas):
     return model.requerimiento_4(catalog,origen,cant_millas)
     
+def requerimiento_5(catalog,codigo):
+    return model.requerimiento_5(catalog,codigo)
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.

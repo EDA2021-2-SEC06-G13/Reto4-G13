@@ -120,6 +120,11 @@ while True:
         millas=input("Ingrese la cantidad de millas: ")
         r=controller.requerimiento_4(catalog,ciudad,millas)   
         print(r)
+
+    elif int(inputs[0])==6:
+        iata=input("Ingrese el IATA: ")
+        r=controller.requerimiento_5(catalog,iata)
+        print(r)
     else:
         sys.exit(0)
 sys.exit(0)
